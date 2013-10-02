@@ -7,6 +7,8 @@ $(document).ready(function() {
 
 var randomNumber = randomFromInterval(0,100); //Stores current random number generated
 
+var previousDistance = 0; //Keeps the value of the previous entry
+
 var guessInput = $('#guess'); //input guess reference
 
 var guessButton = $('.guesssubmit'); //guess submit reference
@@ -14,7 +16,6 @@ var cheatButton = $('.cheatsubmit'); //cehat submit reference
 var resetButton = $('.resetsubmit'); //reset submit reference
 
 var replyText = $('#reply'); //reply div reference
-var replyErrorText = $('#error-reply'); //error reply div reference
 
 
 // ******************** Input functions ********************
@@ -70,16 +71,12 @@ function numbersDistanceModule(x, y) {
 }
 
 
-function evaluateEntry(inputValue) {
-// evaluates the input entry
+function evaluateEntry(inputValue) { // evaluates the input entry
 
-		//to clean previous errors, if exists:
-		if(replyErrorText.innerText != ''){
-			writeErrorReply('');
-		}
-			
+		// I hide the div after any input, so I can perform a fadeIn effect to show messages
+		hideDivs();
 
-		if(isNaN(inputValue) || inputValue == '') { // Check if the inout is not a number
+		if(isNaN(inputValue) || inputValue == '') { // Check if the input is not a number
 				writeErrorReply("Error: Please enter a valid number between 0 and 100.");
 		}else{ 
 
@@ -90,6 +87,9 @@ function evaluateEntry(inputValue) {
 			// Now that I have the "distance" I check how cold or hot is it, and if the number is the same.
 
 			switch (true) {
+				case ( previousDistance != 0 && previousDistance < distance): //I check if the distance has increase from previous input.
+					writeReply("You are going in the wrong direction");
+				  break;
 				case (distance > 0 && distance <= 10):
 					writeReply("You are getting really hot.");
 				  break;
@@ -109,6 +109,8 @@ function evaluateEntry(inputValue) {
 					writeCorrectReply("Correct! The number is: " + randomNumber + ".");
 				  break;
 			}
+			
+			previousDistance = distance; //I save previous inout value before leaving the function
 
 				
 		}
@@ -126,6 +128,15 @@ writeErrorReply(''); //Empty error outputs
 
 guessInput.val(''); //Empty inputs
 
+previousDistance = 0; //Empty previous distance values
+
+hideDivs(); //hide message divs
+}
+
+
+function hideDivs() {
+// Hide divs that shows messages
+		replyText.hide();
 
 }
 
@@ -140,19 +151,23 @@ guessInput.val(''); //Empty inputs
 function writeReply(text) {
 // write reply text value on reply div in HTML;
 	replyText.html("<h4>" + text + "</h4>");
+	replyText.fadeIn(); //Just a nice fadeIn effect
 }
 function writeCorrectReply(text) {
 // write reply text value on reply div in HTML;
 	replyText.html("<h4 class='correct'>" + text + "</h4>");
+	replyText.fadeIn(); //Just a nice fadeIn effect
 }
 function writeErrorReply(text) {
 // write reply text value on error-reply div in HTML;
-	replyErrorText.html("<h4 class='error'>" + text + "</h4>");
+	replyText.html("<h4 class='error'>" + text + "</h4>");
+	replyText.fadeIn(); //Just a nice fadeIn effect
 }
 
 function showRandomNumber() {
 // display random number
 		alert( "The random number is: " + randomNumber );
+		
 }
 
 // ******************** End Output functions ********************
