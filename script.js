@@ -88,7 +88,7 @@ function evaluateEntry(inputValue) { // evaluates the input entry
 
 			switch (true) {
 				case ( previousDistance != 0 && previousDistance < distance): //I check if the distance has increase from previous input.
-					writeReply("You are going in the wrong direction");
+					writeReply("You are moving away");
 				  break;
 				case (distance > 0 && distance <= 10):
 					writeReply("You are getting really hot.");
