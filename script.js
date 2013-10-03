@@ -131,6 +131,8 @@ guessInput.val(''); //Empty inputs
 previousDistance = 0; //Empty previous distance values
 
 hideDivs(); //hide message divs
+
+guessInput.focus(); //to get the focus on the box after the reset
 }
 
 
