@@ -74,7 +74,11 @@ function numbersDistanceModule(x, y) {
 function evaluateEntry(inputValue) { // evaluates the input entry
 
 		// I hide the div after any input, so I can perform a fadeIn effect to show messages
-		hideDivs();
+		// hideDivs();
+		writeReply(''); //Empty outputs
+		
+		guessInput.val(''); //Empty inputs
+		guessInput.focus(); //to get the focus on the box after the reset
 
 		if(isNaN(inputValue) || inputValue == '') { // Check if the input is not a number
 				writeErrorReply("Error: Please enter a valid number between 0 and 100.");
@@ -130,7 +134,7 @@ guessInput.val(''); //Empty inputs
 
 previousDistance = 0; //Empty previous distance values
 
-hideDivs(); //hide message divs
+// hideDivs(); //hide message divs
 
 guessInput.focus(); //to get the focus on the box after the reset
 }
@@ -168,7 +172,7 @@ function writeErrorReply(text) {
 
 function showRandomNumber() {
 // display random number
-		alert( "The random number is: " + randomNumber );
+	replyText.html("<h4> The random number is: " + randomNumber + "</h4>");
 		
 }
 
